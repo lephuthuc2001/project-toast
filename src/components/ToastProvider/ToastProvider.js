@@ -24,6 +24,8 @@ function ToastProvider({ children }) {
       };
 
       nextToasts.push(newToast);
+
+      return nextToasts;
     });
   }
 
