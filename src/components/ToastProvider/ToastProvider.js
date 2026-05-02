@@ -6,36 +6,32 @@ function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
 
   function removeToastById(id) {
-    const nextToasts = [...toasts].filter((toast) => toast.id !== id);
-    setToasts(nextToasts);
+    setToasts((prevToasts) =>
+      [...prevToasts].filter((toast) => toast.id !== id),
+    );
   }
 
   function addToast(variant, msg) {
-    const nextToasts = [...toasts];
+    setToasts((prevToasts) => {
+      const nextToasts = [...prevToasts];
 
-    const newToastId = crypto.randomUUID();
+      const newToastId = crypto.randomUUID();
 
-    const newToast = {
-      id: newToastId,
-      variant,
-      msg,
-    };
+      const newToast = {
+        id: newToastId,
+        variant,
+        msg,
+      };
 
-    nextToasts.push(newToast);
-
-    setToasts(nextToasts);
+      nextToasts.push(newToast);
+    });
   }
 
-  const contextValue = React.useMemo(
-    function () {
-      return {
-        toasts,
-        addToast,
-        removeToastById,
-      };
-    },
-    [toasts],
-  );
+  const contextValue = {
+    toasts,
+    addToast,
+    removeToastById,
+  };
 
   return <ToastContext value={contextValue}>{children}</ToastContext>;
 }
