@@ -1,9 +1,15 @@
 import React from "react";
 
+import useKeyDown from "../../hooks/useKeyDown";
+
 export const ToastContext = React.createContext([]);
 
 function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
+
+  useKeyDown("Escape", function () {
+    setToasts([]);
+  });
 
   function removeToastById(id) {
     setToasts((prevToasts) =>
