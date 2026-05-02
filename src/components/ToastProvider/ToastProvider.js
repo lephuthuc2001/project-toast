@@ -26,11 +26,16 @@ function ToastProvider({ children }) {
     setToasts(nextToasts);
   }
 
-  const contextValue = {
-    toasts,
-    addToast,
-    removeToastById,
-  };
+  const contextValue = React.useMemo(
+    function () {
+      return {
+        toasts,
+        addToast,
+        removeToastById,
+      };
+    },
+    [toasts],
+  );
 
   return <ToastContext value={contextValue}>{children}</ToastContext>;
 }
